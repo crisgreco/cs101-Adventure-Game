@@ -56,16 +56,19 @@ class Player:
     # Player attacks the animal with a random item from their items list.
     def attack(self, animal: Animal, player_power_up=None, items=None):
         if player_power_up == "extra damage" and items == None:
+        # If player uses extra damage, creates a new item list with 25% more damage
             self.buffed_items = []
             for item in self.items:
                 self.buffed_items.append(Item(item.name, item.damage * 1.25))
             buffed_item: Item = random.choice(self.buffed_items)
+            # Attacks the animal with buffed item
             animal.hitpoints = animal.hitpoints - buffed_item.damage
             print(f"{self.name} with {self.hitpoints} hitpoints has attacked the {animal.name} with a {buffed_item.name} for {buffed_item.damage} damage!")
             if animal.hitpoints > 0:
                 print(f"The {animal.name} has {animal.hitpoints} hitpoints remaining.")
                 print("----------------------------------------------------------")
         elif player_power_up == "extra damage" and items == "buffed items":
+        # For the rest of the attacks while using the extra damage power up, uses an item from the item list created above
             buffed_item: Item = random.choice(self.buffed_items)
             animal.hitpoints = animal.hitpoints - buffed_item.damage
             print(f"{self.name} with {self.hitpoints} hitpoints has attacked the {animal.name} with a {buffed_item.name} for {buffed_item.damage} damage!")
@@ -73,6 +76,7 @@ class Player:
                 print(f"The {animal.name} has {animal.hitpoints} hitpoints remaining.")
                 print("----------------------------------------------------------")
         else:
+        # Normal attack without the power up
             item: Item = random.choice(self.items)
             animal.hitpoints = animal.hitpoints - item.damage
             print(f"{self.name} with {self.hitpoints} hitpoints has attacked the {animal.name} with a {item.name} for {item.damage} damage!")
